@@ -6,6 +6,10 @@ class Repositoriocontato { //Repositório de contatos
 
   void addContato(Contato c) {
     contatos.add(c);
+    SnackBar(
+        content: Text('Contato Adicionado!'),
+        duration: Duration(seconds: 2),
+        backgroundColor: Colors.green);
   }
 
   List<Contato> getContatos() {
@@ -18,7 +22,7 @@ class Repositoriocontato { //Repositório de contatos
       {
         SnackBar(
             content: Text('Objeto selecionado está fora do indice!'),
-            duration: Duration(seconds: 3),
+            duration: Duration(seconds: 2),
             backgroundColor: Colors.red);
       }else{
         contatos.elementAt(local).nome = novo.nome;
@@ -36,7 +40,7 @@ class Repositoriocontato { //Repositório de contatos
     contatos.remove(c);
     SnackBar(
         content: Text('Contato Removido!'),
-        duration: Duration(seconds: 3),
+        duration: Duration(seconds: 2),
         backgroundColor: Colors.green);
   }
 }

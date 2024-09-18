@@ -1,6 +1,7 @@
 import 'package:agenda_flutter/entidades/Contato.dart';
+import 'package:flutter/material.dart';
 
-class Repositoriocontato { //Classe com uma lista de contatos para mostrar em uma tela
+class Repositoriocontato { //Repositório de contatos
   final List<Contato> contatos = [];
 
   void addContato(Contato c) {
@@ -9,5 +10,25 @@ class Repositoriocontato { //Classe com uma lista de contatos para mostrar em um
 
   List<Contato> getContatos() {
     return contatos;
+  }
+
+  void atualizarContato(Contato novo, int local)
+  {
+    if (contatos.length<local)
+      {
+        SnackBar(
+            content: Text('Objeto selecionado está fora do indice!'),
+            duration: Duration(seconds: 3),
+            backgroundColor: Colors.red);
+      }else{
+        contatos.elementAt(local).nome = novo.nome;
+        contatos.elementAt(local).telefone = novo.telefone;
+        contatos.elementAt(local).email = novo.email;
+    }
+  }
+
+  void removerContato(Contato c)
+  {
+    contatos.remove(c);
   }
 }

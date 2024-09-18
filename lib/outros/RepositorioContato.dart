@@ -24,11 +24,19 @@ class Repositoriocontato { //Repositório de contatos
         contatos.elementAt(local).nome = novo.nome;
         contatos.elementAt(local).telefone = novo.telefone;
         contatos.elementAt(local).email = novo.email;
+        SnackBar(
+            content: Text('Contato atualizado!'),
+            duration: Duration(seconds: 2),
+            backgroundColor: Colors.green);
     }
   }
 
   void removerContato(Contato c)
   {
     contatos.remove(c);
+    SnackBar(
+        content: Text('Contato Removido!'),
+        duration: Duration(seconds: 3),
+        backgroundColor: Colors.green);
   }
 }

@@ -7,3 +7,8 @@ Agenda Flutter.
 Para utilizar o projeto, basta baixar o APK na tela de Release e instala-lo em seu dispositivo Android
 
 Após isso apenas abra o aplicativo e escolha as opções de Cadastro para cadastrar um contato e Listar para editar ou remover um contato.
+
+## Criador
+
+José Carlos Gabriel, RGM 802.417
+

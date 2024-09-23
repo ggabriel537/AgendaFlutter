@@ -1,5 +1,4 @@
 import 'package:agenda_flutter/entidades/Contato.dart';
-import 'package:flutter/material.dart';
 
 class Repositoriocontato { //Repositório de contatos
   final List<Contato> contatos = [];

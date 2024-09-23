@@ -1,7 +1,5 @@
-import 'package:agenda_flutter/outros/RepositorioContato.dart';
 import 'package:flutter/material.dart';
 
-import '../entidades/Contato.dart';
 import '../telas/Principal.dart';
 
 void main() {

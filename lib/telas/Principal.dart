@@ -2,7 +2,6 @@ import 'package:agenda_flutter/telas/SelecaoAlt.dart';
 import 'package:flutter/material.dart';
 
 import '../outros/RepositorioContato.dart';
-import '../outros/main.dart';
 import 'Cadastro.dart';
 
 class Principal extends StatelessWidget { //Tela principal de navegação

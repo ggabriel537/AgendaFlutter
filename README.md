@@ -2,15 +2,8 @@
 
 Agenda Flutter.
 
-## Getting Started
+## Como utilizar
 
-This project is a starting point for a Flutter application.
+Para utilizar o projeto, basta baixar o APK na tela de Release e instala-lo em seu dispositivo Android
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Após isso apenas abra o aplicativo e escolha as opções de Cadastro para cadastrar um contato e Listar para editar ou remover um contato.

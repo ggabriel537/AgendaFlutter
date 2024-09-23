@@ -1,9 +1,9 @@
+import 'package:agenda_flutter/telas/SelecaoAlt.dart';
 import 'package:flutter/material.dart';
 
 import '../outros/RepositorioContato.dart';
 import '../outros/main.dart';
 import 'Cadastro.dart';
-import 'Listagem.dart';
 
 class Principal extends StatelessWidget { //Tela principal de navegação
   final Repositoriocontato rc = Repositoriocontato();
@@ -27,16 +27,16 @@ class Principal extends StatelessWidget { //Tela principal de navegação
             },
             child: Text("Cadastro"),
           ),
-          ElevatedButton( //Botão para tela de listagem
+          ElevatedButton( //Botão para tela de edicao
             onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Listagem(rc: rc),
+                  builder: (context) => Selecaoalt(rc: rc),
                 ),
               );
             },
-            child: Text("Listar"),
+            child: Text("Lista"),
           ),
         ],
       ),

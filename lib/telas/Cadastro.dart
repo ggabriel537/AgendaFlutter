@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../entidades/Contato.dart';
 import '../outros/RepositorioContato.dart';
@@ -38,6 +39,10 @@ class _CadastroState extends State<Cadastro> { //Tela de cadastro
             TextField(
               decoration: InputDecoration(labelText: 'Telefone'),
               controller: telefoneController,
+              keyboardType: TextInputType.number,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly,
+              ],
             ),
             TextField(
               decoration: InputDecoration(labelText: 'E-mail'),

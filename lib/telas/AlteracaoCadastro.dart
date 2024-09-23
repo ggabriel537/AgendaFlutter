@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../entidades/Contato.dart';
 import '../outros/RepositorioContato.dart';
 
@@ -80,6 +81,10 @@ class _AlteracaoCadastroState extends State<AlteracaoCadastro> {
             TextField(
               decoration: InputDecoration(labelText: 'Telefone'),
               controller: telefoneController,
+              keyboardType: TextInputType.number,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly,
+              ],
             ),
             TextField(
               decoration: InputDecoration(labelText: 'E-mail'),

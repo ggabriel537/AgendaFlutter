@@ -44,12 +44,23 @@ class _CadastroState extends State<Cadastro> { //Tela de cadastro
               controller: emailController,
             ),
             SizedBox(height: 20),
-            ElevatedButton( //Ao pressionar o botão o programa le os dados informados e salva ele na lista de contatos
+            ElevatedButton( //Botão para cadastrar
               onPressed: () {
                 setState(() {
                   rc.addContato(Contato(
-                      nome: nomeController.text, telefone: telefoneController.text, email: emailController.text));
+                    nome: nomeController.text,
+                    telefone: telefoneController.text,
+                    email: emailController.text,
+                  ));
                 });
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Contato ' + nomeController.text + ' cadastrado com sucesso!'),
+                    duration: Duration(seconds: 3),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+
                 Navigator.pop(context);
               },
               child: Text('Salvar'),

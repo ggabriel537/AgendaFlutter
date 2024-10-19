@@ -1,11 +1,11 @@
+import 'package:agenda_flutter/outros/RepositorioContato.dart';
 import 'package:agenda_flutter/telas/SelecaoAlt.dart';
 import 'package:flutter/material.dart';
 
-import '../outros/RepositorioContato.dart';
 import 'Cadastro.dart';
 
 class Principal extends StatelessWidget { //Tela principal de navegação
-  final Repositoriocontato rc = Repositoriocontato();
+  Repositoriocontato rc = Repositoriocontato();
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class Principal extends StatelessWidget { //Tela principal de navegação
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Cadastro(rc: rc),
+                  builder: (context) => Cadastro(rc: rc,),
                 ),
               );
             },

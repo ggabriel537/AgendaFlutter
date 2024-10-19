@@ -1,7 +1,7 @@
 import 'package:agenda_flutter/entidades/Contato.dart';
 
 class Repositoriocontato { //Repositório de contatos
-  final List<Contato> contatos = [];
+  List<Contato> contatos = [];
 
   void addContato(Contato c) {
     contatos.add(c);

@@ -1,6 +1,7 @@
+import 'package:agenda_flutter/DAO/Dao.dart';
+import 'package:agenda_flutter/outros/RepositorioContato.dart';
 import 'package:flutter/material.dart';
 import '../entidades/Contato.dart';
-import '../outros/RepositorioContato.dart';
 import 'AlteracaoCadastro.dart';
 
 class Selecaoalt extends StatefulWidget {
@@ -13,9 +14,22 @@ class Selecaoalt extends StatefulWidget {
 }
 
 class ListagemState extends State<Selecaoalt> {
-  final Repositoriocontato rc;
+  Repositoriocontato rc = Repositoriocontato();
+  List<Contato> contatos = [];
 
   ListagemState({required this.rc});
+
+  @override
+  void initState() {
+    super.initState();
+    _loadContatos();
+  }
+
+  Future<void> _loadContatos() async {
+    Dao cd = Dao(rc: rc);
+    contatos = await cd.contatos;
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,28 +37,25 @@ class ListagemState extends State<Selecaoalt> {
       appBar: AppBar(
         title: Text('Lista de contatos'),
       ),
-      body: ListView.builder( //Listagem dos contatos existentes
-        itemCount: rc.getContatos().length,
+      body: ListView.builder(
+        itemCount: contatos.length,
         itemBuilder: (context, index) {
-          Contato c = rc.getContatos()[index];
+          Contato c = contatos[index];
           return ListTile(
             title: Text(c.nome),
             subtitle: Text("- Telefone: " + c.telefone + "\n- Email: " + c.email),
-            onTap: () async { //Quando usuário clicar no botão ele abre a tela de alteração de cadastro e envia os dados do contato selecionado
-              //Função async para quando o usuário sair da tela de cadastro ele automaticamente atualizar a lista dos contatos
-              final altCad = await Navigator.push( //abre a janela de alteração de cadastro o programa espera um retorno caso o usuário tenha alterado alguma coisa na tela a seguir
+            onTap: () async {
+              final altCad = await Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => AlteracaoCadastro(
-                    rc: rc,
                     contato: c,
-                    index: index,
+                    rc: rc,
                   ),
                 ),
               );
-              if (altCad == true) { //caso houver alteração ele recarrega as informações
-                setState(() {
-                });
+              if (altCad == true) {
+                _loadContatos();
               }
             },
           );

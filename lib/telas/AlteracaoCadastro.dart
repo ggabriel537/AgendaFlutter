@@ -1,18 +1,18 @@
+import 'package:agenda_flutter/outros/RepositorioContato.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import '../DAO/Dao.dart';
 import '../entidades/Contato.dart';
-import '../outros/RepositorioContato.dart';
 
 class AlteracaoCadastro extends StatefulWidget {
-  final Repositoriocontato rc;
   final Contato contato;
-  final int index;
+  final Repositoriocontato rc;
 
-  AlteracaoCadastro({required this.rc, required this.contato, required this.index});
+  AlteracaoCadastro({required this.contato, required this.rc});
 
   @override
-  State<AlteracaoCadastro> createState() => _AlteracaoCadastroState(rc: rc, contato: contato, indicec: index);
+  State<AlteracaoCadastro> createState() => _AlteracaoCadastroState(contato: contato, rc: rc);
 }
 
 class _AlteracaoCadastroState extends State<AlteracaoCadastro> {
@@ -20,6 +20,7 @@ class _AlteracaoCadastroState extends State<AlteracaoCadastro> {
   final TextEditingController telefoneController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
 
+  Repositoriocontato rc = Repositoriocontato();
   String telErro = "";
   String emailErro = "";
   bool erroTelefone = false;
@@ -27,22 +28,20 @@ class _AlteracaoCadastroState extends State<AlteracaoCadastro> {
   bool erroNome = false;
   String nomeErro = "";
 
-  final Repositoriocontato rc;
-  final int indicec; // Índice do contato
-
-  final MaskTextInputFormatter mascaraTel = MaskTextInputFormatter( // Mascara para telefone
+  final MaskTextInputFormatter mascaraTel = MaskTextInputFormatter(
     mask: '(##) # ####-####',
     filter: { "#": RegExp(r'[0-9]') },
     type: MaskAutoCompletionType.lazy,
   );
 
-  _AlteracaoCadastroState({required this.rc, required Contato contato, required this.indicec}) {
+  _AlteracaoCadastroState({required Contato contato, required this.rc}) {
     nomeController.text = contato.nome;
     telefoneController.text = contato.telefone;
     emailController.text = contato.email;
   }
 
   void _confirmarRemocao(BuildContext context) {
+    Dao cd = Dao(rc: rc);
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -53,15 +52,19 @@ class _AlteracaoCadastroState extends State<AlteracaoCadastro> {
             TextButton(
               child: Text('Cancelar'),
               onPressed: () {
-                Navigator.of(context).pop(); // Fecha o diálogo
+                Navigator.of(context).pop();
               },
             ),
             TextButton(
               child: Text('Remover'),
-              onPressed: () {
-                setState(() {
-                  rc.removerContato(widget.contato); // Remove o contato
-                });
+              onPressed: () async {
+                //await rc.removerContato(widget.contato.id!);
+                cd.remover(Contato(
+                  id: widget.contato.id,
+                  nome: "",
+                  telefone: "",
+                  email: ""
+                ));
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text('Contato ' + nomeController.text + ' removido com sucesso!'),
@@ -69,8 +72,8 @@ class _AlteracaoCadastroState extends State<AlteracaoCadastro> {
                     backgroundColor: Colors.green,
                   ),
                 );
-                Navigator.of(context).pop(); // Fecha o diálogo
-                Navigator.pop(context, true); // Retorna à tela anterior
+                Navigator.of(context).pop();
+                Navigator.pop(context, true);
               },
             ),
           ],
@@ -81,37 +84,18 @@ class _AlteracaoCadastroState extends State<AlteracaoCadastro> {
 
   void _validarCampos() {
     setState(() {
-      // Verifica se o nome está vazio
-      if (nomeController.text.isEmpty) {
-        erroNome = true;
-        nomeErro = "Nome não pode estar em branco!";
-      } else {
-        erroNome = false;
-        nomeErro = '';
-      }
-
-      // Verifica se o telefone possui 16 dígitos
-      if (telefoneController.text.length != 16) {
-        erroTelefone = true;
-        telErro = "Telefone Inválido!";
-      } else {
-        erroTelefone = false;
-        telErro = '';
-      }
-
-      // Valida o e-mail
-      if (!(emailController.text.contains("@") && emailController.text.contains("."))) {
-        erroEmail = true;
-        emailErro = "E-mail Inválido!";
-      } else {
-        erroEmail = false;
-        emailErro = '';
-      }
+      erroNome = nomeController.text.isEmpty;
+      nomeErro = erroNome ? "Nome não pode estar em branco!" : '';
+      erroTelefone = telefoneController.text.length != 16;
+      telErro = erroTelefone ? "Telefone Inválido!" : '';
+      erroEmail = !(emailController.text.contains("@") && emailController.text.contains("."));
+      emailErro = erroEmail ? "E-mail Inválido!" : '';
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    Dao cd = Dao(rc: rc);
     return Scaffold(
       appBar: AppBar(
         title: Text('Alteração de Contatos'),
@@ -123,76 +107,47 @@ class _AlteracaoCadastroState extends State<AlteracaoCadastro> {
             TextField(
               decoration: InputDecoration(
                 labelText: 'Nome',
-                errorText: erroNome ? nomeErro : null, // Caso estiver errado, preenche com a mensagem de erro
+                errorText: erroNome ? nomeErro : null,
               ),
               controller: nomeController,
-              onChanged: (value) {
-                setState(() {
-                  // Testa para verificar se o nome está vazio
-                  if (nomeController.text.isEmpty) {
-                    erroNome = true;
-                    nomeErro = "Nome não pode estar em branco!";
-                  } else {
-                    erroNome = false;
-                    nomeErro = '';
-                  }
-                });
-              },
             ),
             TextField(
               decoration: InputDecoration(
                 labelText: 'Telefone',
-                errorText: erroTelefone ? telErro : null, // Caso estiver errado, preenche com a mensagem de erro
+                errorText: erroTelefone ? telErro : null,
               ),
               controller: telefoneController,
               keyboardType: TextInputType.number,
               inputFormatters: <TextInputFormatter>[
                 FilteringTextInputFormatter.digitsOnly,
-                mascaraTel, // Mascara criada para o telefone
+                mascaraTel,
               ],
-              onChanged: (value) { // Quando alterar
-                setState(() {
-                  // Verifica se o telefone possui 16 dígitos
-                  if (telefoneController.text.length != 16) {
-                    erroTelefone = true;
-                    telErro = "Telefone Inválido!";
-                  } else {
-                    erroTelefone = false;
-                    telErro = '';
-                  }
-                });
-              },
             ),
             TextField(
               decoration: InputDecoration(
                 labelText: 'E-mail',
-                errorText: erroEmail ? emailErro : null, // Caso o email estiver errado, preenche com a mensagem de erro
+                errorText: erroEmail ? emailErro : null,
               ),
               controller: emailController,
-              onChanged: (value) { // Quando alterar o valor
-                setState(() {
-                  // Verifica se o e-mail é válido
-                  if (!(emailController.text.contains("@") && emailController.text.contains("."))) {
-                    erroEmail = true;
-                    emailErro = "E-mail Inválido!";
-                  } else {
-                    erroEmail = false;
-                    emailErro = '';
-                  }
-                });
-              },
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                _validarCampos(); // Valida os campos
-                if (!erroNome && !erroTelefone && !erroEmail) { // Verifica se todos os campos estão corretos
-                  rc.atualizarContato(Contato( // Atualiza o contato com as informações novas
+              onPressed: () async {
+                _validarCampos();
+                if (!erroNome && !erroTelefone && !erroEmail) {
+                  await cd.atualizar(Contato(
+                    id: widget.contato.id,
+                    nome: nomeController.text,
+                    telefone: telefoneController.text,
+                    email: emailController.text
+                  ));
+                  /*await rc.atualizarContato(Contato(
+                    id: widget.contato.id,
                     nome: nomeController.text,
                     telefone: telefoneController.text,
                     email: emailController.text,
-                  ), indicec);
-                  Navigator.pop(context, true); // Retorna true para atualizar a lista na tela anterior
+                  ));*/
+                  Navigator.pop(context, true);
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
@@ -207,9 +162,9 @@ class _AlteracaoCadastroState extends State<AlteracaoCadastro> {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () => _confirmarRemocao(context), // Chama o método de confirmação
+              onPressed: () => _confirmarRemocao(context),
               child: Text('Remover Contato'),
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.white70), // Altera a cor do botão para cinza
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.white70),
             ),
           ],
         ),

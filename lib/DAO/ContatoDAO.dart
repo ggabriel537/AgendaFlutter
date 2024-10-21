@@ -1,9 +1,8 @@
-import 'package:agenda_flutter/DAO/InterfaceDao.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import '../entidades/Contato.dart';
 
-class ContatoDAO implements InterfaceDao {
+class ContatoDAO {
   Future<Database> initializeDB() async {
     String path = join(await getDatabasesPath(), 'AgendaFlutter.db');
     return await openDatabase(path, onCreate: (db, version) {
@@ -33,7 +32,7 @@ class ContatoDAO implements InterfaceDao {
   @override
   Future<List<Contato>> get contatos async {
     final Database db = await initializeDB();
-    final List<Map<String, dynamic>> maps = await db.query('pessoas');
+    final List<Map<String, dynamic>> maps = await db.query('contatos');
     return List.generate(maps.length, (i) {
       return Contato.fromMap(maps[i]);
     });
@@ -42,7 +41,7 @@ class ContatoDAO implements InterfaceDao {
   @override
   Future<int> remover(Contato c) async {
     final Database db = await initializeDB();
-    return await db.delete("pessoas", where: 'id = ?', whereArgs: [c.id]);
+    return await db.delete("contatos", where: 'id = ?', whereArgs: [c.id]);
   }
 
 }

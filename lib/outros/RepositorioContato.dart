@@ -1,15 +1,17 @@
+import 'package:agenda_flutter/DAO/ContatoDAO.dart';
 import 'package:agenda_flutter/entidades/Contato.dart';
+
+import '../DAO/Dao.dart';
 
 class Repositoriocontato { //Repositório de contatos
   List<Contato> contatos = [];
-
+  ContatoDAO cd = ContatoDAO();
   void addContato(Contato c) {
     contatos.add(c);
+    cd.adicionar(c);
   }
 
-  List<Contato> getContatos() {
-    return contatos;
-  }
+
 
   void atualizarContato(Contato novo, int local)
   {

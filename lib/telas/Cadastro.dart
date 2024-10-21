@@ -49,7 +49,6 @@ class _CadastroState extends State<Cadastro> {
 
   @override
   Widget build(BuildContext context) {
-    Dao cd = Dao(rc: rc);
     return Scaffold(
       appBar: AppBar(
         title: Text('Cadastro de Contatos'),
@@ -94,7 +93,7 @@ class _CadastroState extends State<Cadastro> {
                     telefone: telefoneController.text,
                     email: emailController.text,
                   ));*/
-                  cd.adicionar(Contato(
+                  rc.addContato(Contato(
                     nome: nomeController.text,
                     telefone: telefoneController.text,
                     email: emailController.text,

@@ -20,7 +20,7 @@ class _AlteracaoCadastroState extends State<AlteracaoCadastro> {
   final TextEditingController telefoneController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
 
-  Repositoriocontato rc = Repositoriocontato();
+   Repositoriocontato rc ;
   String telErro = "";
   String emailErro = "";
   bool erroTelefone = false;

@@ -1,6 +1,6 @@
 import 'package:agenda_flutter/DAO/ContatoDAO.dart';
-import 'package:agenda_flutter/DAO/Dao.dart';
-import 'package:agenda_flutter/outros/RepositorioContato.dart';
+import 'package:agenda_flutter/DAO/DaoC.dart';
+import 'package:agenda_flutter/Repositorios/RepositorioContato.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -49,6 +49,7 @@ class _CadastroState extends State<Cadastro> {
 
   @override
   Widget build(BuildContext context) {
+    DaoC cd = DaoC(rc: rc);
     return Scaffold(
       appBar: AppBar(
         title: Text('Cadastro de Contatos'),
@@ -93,7 +94,7 @@ class _CadastroState extends State<Cadastro> {
                     telefone: telefoneController.text,
                     email: emailController.text,
                   ));*/
-                  rc.addContato(Contato(
+                  cd.adicionar(Contato(
                     nome: nomeController.text,
                     telefone: telefoneController.text,
                     email: emailController.text,

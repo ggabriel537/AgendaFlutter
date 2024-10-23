@@ -7,7 +7,7 @@ class ContatoDAO {
     String path = join(await getDatabasesPath(), 'AgendaFlutter.db');
     return await openDatabase(path, onCreate: (db, version) {
       return db.execute(
-        "CREATE TABLE contatos(id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, email TEXT, telefone TEXT)",
+        "CREATE TABLE IF NOT EXISTS contatos(id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, email TEXT, telefone TEXT)",
       );
     }, version: 1);
   }

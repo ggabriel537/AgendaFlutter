@@ -1,8 +1,8 @@
-import 'package:agenda_flutter/outros/RepositorioContato.dart';
+import 'package:agenda_flutter/Repositorios/RepositorioContato.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import '../DAO/Dao.dart';
+import '../DAO/DaoC.dart';
 import '../entidades/Contato.dart';
 
 class AlteracaoCadastro extends StatefulWidget {
@@ -41,7 +41,7 @@ class _AlteracaoCadastroState extends State<AlteracaoCadastro> {
   }
 
   void _confirmarRemocao(BuildContext context) {
-    Dao cd = Dao(rc: rc);
+    DaoC cd = DaoC(rc: rc);
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -95,7 +95,7 @@ class _AlteracaoCadastroState extends State<AlteracaoCadastro> {
 
   @override
   Widget build(BuildContext context) {
-    Dao cd = Dao(rc: rc);
+    DaoC cd = DaoC(rc: rc);
     return Scaffold(
       appBar: AppBar(
         title: Text('Alteração de Contatos'),

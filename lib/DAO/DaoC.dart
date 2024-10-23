@@ -1,12 +1,12 @@
 import 'package:agenda_flutter/DAO/ContatoDAO.dart';
 import 'package:agenda_flutter/entidades/Contato.dart';
-import 'package:agenda_flutter/outros/RepositorioContato.dart';
+import 'package:agenda_flutter/Repositorios/RepositorioContato.dart';
 
 
-class Dao {
+class DaoC {
   ContatoDAO cd = ContatoDAO();
   Repositoriocontato rc = Repositoriocontato();
-  Dao({required this.rc});
+  DaoC({required this.rc});
   @override
   Future<void> adicionar(Contato c) async {
     cd.adicionar(c);

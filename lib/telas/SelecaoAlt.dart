@@ -1,5 +1,5 @@
-import 'package:agenda_flutter/DAO/Dao.dart';
-import 'package:agenda_flutter/outros/RepositorioContato.dart';
+import 'package:agenda_flutter/DAO/DaoC.dart';
+import 'package:agenda_flutter/Repositorios/RepositorioContato.dart';
 import 'package:flutter/material.dart';
 import '../entidades/Contato.dart';
 import 'AlteracaoCadastro.dart';
@@ -26,7 +26,7 @@ class ListagemState extends State<Selecaoalt> {
   }
 
   Future<void> _loadContatos() async {
-    Dao cd = Dao(rc: rc);
+    DaoC cd = DaoC(rc: rc);
     contatos = await cd.contatos;
     setState(() {});
   }

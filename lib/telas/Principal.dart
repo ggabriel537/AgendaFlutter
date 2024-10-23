@@ -1,10 +1,10 @@
-import 'package:agenda_flutter/outros/RepositorioContato.dart';
+import 'package:agenda_flutter/Repositorios/RepositorioContato.dart';
 import 'package:agenda_flutter/telas/SelecaoAlt.dart';
 import 'package:flutter/material.dart';
-
 import 'Cadastro.dart';
+import 'CadastroLogin.dart';
 
-class Principal extends StatelessWidget { //Tela principal de navegação
+class Principal extends StatelessWidget {
   Repositoriocontato rc = Repositoriocontato();
 
   @override
@@ -15,18 +15,18 @@ class Principal extends StatelessWidget { //Tela principal de navegação
       ),
       body: Column(
         children: [
-          ElevatedButton( //Botão para tela de cadastro
+          ElevatedButton(
             onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Cadastro(rc: rc,),
+                  builder: (context) => Cadastro(rc: rc),
                 ),
               );
             },
-            child: Text("Cadastro"),
+            child: Text("Cadastro de Contato"),
           ),
-          ElevatedButton( //Botão para tela de edicao
+          ElevatedButton(
             onPressed: () {
               Navigator.push(
                 context,
@@ -36,6 +36,17 @@ class Principal extends StatelessWidget { //Tela principal de navegação
               );
             },
             child: Text("Lista"),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CadastroLogin(),
+                ),
+              );
+            },
+            child: Text("Cadastro de Login"),
           ),
         ],
       ),

@@ -1,9 +1,26 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 import '../entidades/Login.dart';
 
 class LoginDAO {
+  final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
+
+  Future<void> salvarToken(String token) async {
+    await _secureStorage.write(key: 'login_token', value: token);
+  }
+
+  Future<bool> verificarToken() async {
+    String? token = await _secureStorage.read(key: 'login_token');
+    return token != null;
+  }
+
+  Future<void> removerToken() async {
+    await _secureStorage.delete(key: 'login_token');
+  }
+
+
   Future<Database> initializeDB() async {
     String path = join(await getDatabasesPath(), 'LoginSystem.db');
     return await openDatabase(path, onCreate: (db, version) {

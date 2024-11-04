@@ -1,25 +1,34 @@
-import 'package:agenda_flutter/DAO/LoginDAO.dart';
-import 'package:agenda_flutter/telas/CadastroLogin.dart';
+import 'package:agenda_flutter/telas/Principal.dart';
 import 'package:flutter/material.dart';
-
+import '../DAO/LoginDAO.dart';
+import '../telas/CadastroLogin.dart';
 import '../telas/LoginUsuario.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   LoginDAO loginDAO = LoginDAO();
-  bool usuarioCadastrado = await loginDAO.checarPrimeiroLogin(); //Checa se ja existe usuarios cadastrados
-  runApp(MyApp(usuarioCadastrado: usuarioCadastrado));
+  bool usuarioCadastrado = await loginDAO.checarPrimeiroLogin(); // Verifica se há usuários cadastrados
+  bool usuarioLogado = await loginDAO.verificarToken(); // Verifica se o token está salvo
+
+  runApp(MyApp(
+    usuarioCadastrado: usuarioCadastrado,
+    usuarioLogado: usuarioLogado,
+  ));
 }
 
 class MyApp extends StatelessWidget {
   final bool usuarioCadastrado;
+  final bool usuarioLogado;
 
-  MyApp({required this.usuarioCadastrado});
+  MyApp({required this.usuarioCadastrado, required this.usuarioLogado});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: usuarioCadastrado ? LoginUsuario() : CadastroLogin(), //Caso ja existir leva para o LoginUsuario, senao leva para CadastroLogin
+      home: usuarioLogado
+          ? Principal() // Tela inicial quando o usuário está logado
+          : (usuarioCadastrado ? LoginUsuario() : CadastroLogin()), // Login ou cadastro
     );
   }
 }
